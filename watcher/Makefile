@@ -40,7 +40,7 @@ build:
 		-v $(CURDIR):$(DSTDIR) \
 		-e GOCACHE=/tmp/.cache \
 		$(BUILDBOX) \
-		/bin/bash -c "make -C $(DSTDIR) build-inside-container"
+		/usr/bin/dumb-init /bin/bash -c "make -C $(DSTDIR) build-inside-container"
 
 
 #

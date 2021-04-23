@@ -1,5 +1,5 @@
 # Mostly copied from https://github.com/grafana/grafana/blob/v6.7.x/packaging/docker/ubuntu.Dockerfile
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 ARG GRAFANA_VERSION
 ARG GRAFANA_TGZ="https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz"
@@ -9,7 +9,7 @@ ARG GRAFANA_TGZ="https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.l
 # https://github.com/golang/go/issues/35305
 RUN set -ex && test -e /etc/nsswitch.conf || echo 'hosts: files dns' > /etc/nsswitch.conf
 
-RUN set -ex && apt-get update && apt-get install -qq -y tar && \
+RUN set -ex && apt-get update && apt-get install -qq -y --no-install-recommends tar && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -17,7 +17,7 @@ ADD ${GRAFANA_TGZ} /tmp/grafana.tar.gz
 
 RUN set -ex && mkdir /tmp/grafana && tar xfvz /tmp/grafana.tar.gz --strip-components=1 -C /tmp/grafana
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 ARG GF_UID="472"
 ARG GF_GID="472"
@@ -32,7 +32,7 @@ ENV PATH=/usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bi
 
 WORKDIR $GF_PATHS_HOME
 
-RUN set -ex && apt-get update && apt-get install -qq -y libfontconfig ca-certificates dumb-init && \
+RUN set -ex && apt-get update && apt-get install -qq -y --no-install-recommends libfontconfig ca-certificates dumb-init && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 

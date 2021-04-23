@@ -1,4 +1,4 @@
-FROM quay.io/gravitational/debian-grande:stretch
+FROM quay.io/gravitational/debian-grande:buster
 
 # Ensure nsswitch is set so localhost will be resolved locally
 # https://github.com/gravitational/gravity/issues/1046
